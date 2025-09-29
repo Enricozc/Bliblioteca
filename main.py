@@ -39,3 +39,8 @@ def listar_livros():
         print(f"ID: {livro[0]} | Título: {livro[1]} | Autor: {livro[2]} | Ano: {livro[3]} | Disponível: {livro[4]}")
     print("-" * 60)
 
+if __name__ == "__main__":
+    cadastrar_livro("Dom Casmurro", "Machado de Assis", 1899)
+    cadastrar_livro("O Senhor dos Anéis", "J.R.R. Tolkien", 1954)
+
+    listar_livros()
