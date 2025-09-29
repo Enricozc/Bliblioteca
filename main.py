@@ -39,8 +39,19 @@ def listar_livros():
         print(f"ID: {livro[0]} | Título: {livro[1]} | Autor: {livro[2]} | Ano: {livro[3]} | Disponível: {livro[4]}")
     print("-" * 60)
 
-if __name__ == "__main__":
-    cadastrar_livro("Dom Casmurro", "Machado de Assis", 1899)
-    cadastrar_livro("O Senhor dos Anéis", "J.R.R. Tolkien", 1954)
+def atualizar_disponibilidade(id_livro):
+    
+    cursor.execute("SELECT disponivel FROM livros WHERE id = ?", (id_livro,))
+    resultado = cursor.fetchone()
 
-    listar_livros()
+    if not resultado:
+        print(f"\n Nenhum livro encontrado com ID {id_livro}.")
+        return
+
+    novo_status = "Não" if resultado[0] == "Sim" else "Sim"
+
+    cursor.execute("UPDATE livros SET disponivel = ? WHERE id = ?", (novo_status, id_livro))
+    conexao.commit()
+    print(f"\n🔄 Disponibilidade do livro {id_livro} atualizada para {novo_status}.")
+
+
