@@ -14,3 +14,12 @@ CREATE TABLE IF NOT EXISTS livros (
 """)
 
 conexao.commit()
+
+def cadastrar_livro(titulo, autor, ano):
+    cursor.execute("""
+        INSERT INTO livros (titulo, autor, ano, disponivel)
+        VALUES (?, ?, ?, 'Sim')
+    """, (titulo, autor, ano))
+    conexao.commit()
+    print(f" Livro '{titulo}' cadastrado com sucesso!")
+
