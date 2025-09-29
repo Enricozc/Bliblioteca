@@ -63,3 +63,39 @@ def remover_livro(id_livro):
     cursor.execute("DELETE FROM livros WHERE id = ?", (id_livro,))
     conexao.commit()
     print(f"\n Livro com ID {id_livro} removido com sucesso.")
+
+
+def menu():
+    while True:
+        print("\n===== 📚 MENU BIBLIOTECA =====")
+        print("1. Cadastrar livro")
+        print("2. Listar livros")
+        print("3. Atualizar disponibilidade")
+        print("4. Remover livro")
+        print("5. Sair")
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            titulo = input("Título: ")
+            autor = input("Autor: ")
+            ano = int(input("Ano: "))
+            cadastrar_livro(titulo, autor, ano)
+
+        elif opcao == "2":
+            listar_livros()
+
+        elif opcao == "3":
+            id_livro = int(input("Digite o ID do livro: "))
+            atualizar_disponibilidade(id_livro)
+
+        elif opcao == "4":
+            id_livro = int(input("Digite o ID do livro a remover: "))
+            remover_livro(id_livro)
+
+        elif opcao == "5":
+            print("\n👋 Saindo do sistema... Até logo!")
+            break
+
+        else:
+            print("\n⚠️ Opção inválida! Tente novamente.")
+
