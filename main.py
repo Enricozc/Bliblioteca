@@ -1,17 +1,16 @@
 import sqlite3
 
-conexao = sqlite3.connect("escola.db")
-
-#Criar um obijeto "cursor" server para executar os chamados SQL
+conexao = sqlite3.connect("biblioteca.db")
 cursor = conexao.cursor()
 
-#Criar uma tabela no banco de dados
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS alunos (
+CREATE TABLE IF NOT EXISTS livros (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    idade INTEGER,        
-    curso TEXT          
-    )
+    titulo TEXT NOT NULL,
+    autor TEXT NOT NULL,
+    ano INTEGER,
+    disponivel TEXT CHECK(disponivel IN ('Sim', 'Não')) NOT NULL
+)
 """)
+
 conexao.commit()
