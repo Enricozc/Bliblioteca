@@ -1,4 +1,5 @@
 import sqlite3
+import streamlit as st
 
 conexao = sqlite3.connect("biblioteca.db")
 cursor = conexao.cursor()
@@ -65,37 +66,20 @@ def remover_livro(id_livro):
     print(f"\n Livro com ID {id_livro} removido com sucesso.")
 
 
-def menu():
-    while True:
-        print("\n===== 📚 MENU BIBLIOTECA =====")
-        print("1. Cadastrar livro")
-        print("2. Listar livros")
-        print("3. Atualizar disponibilidade")
-        print("4. Remover livro")
-        print("5. Sair")
-        opcao = input("Escolha uma opção: ")
+st.title("📚 Biblioteca com Streamlit")
 
-        if opcao == "1":
-            titulo = input("Título: ")
-            autor = input("Autor: ")
-            ano = int(input("Ano: "))
+menu = st.sidebar.radio("Menu", ["Cadastrar Livro", "Listar Livros", "Atualizar Disponibilidade", "Remover Livro"])
+
+if menu == "Cadastrar Livro":
+    st.subheader("Cadastrar Novo Livro")
+    titulo = st.text_input("Título")
+    autor = st.text_input("Autor")
+    ano = st.number_input("Ano", min_value=0, max_value=2100, step=1)
+
+    if st.button("Cadastrar"):
+        if titulo and autor:
             cadastrar_livro(titulo, autor, ano)
-
-        elif opcao == "2":
-            listar_livros()
-
-        elif opcao == "3":
-            id_livro = int(input("Digite o ID do livro: "))
-            atualizar_disponibilidade(id_livro)
-
-        elif opcao == "4":
-            id_livro = int(input("Digite o ID do livro a remover: "))
-            remover_livro(id_livro)
-
-        elif opcao == "5":
-            print("\n👋 Saindo do sistema... Até logo!")
-            break
-
+            st.success(f"Livro '{titulo}' cadastrado com sucesso!")
         else:
-            print("\n⚠️ Opção inválida! Tente novamente.")
+            st.error("Preencha todos os campos obrigatórios!")
 
