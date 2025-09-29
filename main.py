@@ -40,7 +40,7 @@ def listar_livros():
     print("-" * 60)
 
 def atualizar_disponibilidade(id_livro):
-    
+
     cursor.execute("SELECT disponivel FROM livros WHERE id = ?", (id_livro,))
     resultado = cursor.fetchone()
 
@@ -52,6 +52,14 @@ def atualizar_disponibilidade(id_livro):
 
     cursor.execute("UPDATE livros SET disponivel = ? WHERE id = ?", (novo_status, id_livro))
     conexao.commit()
-    print(f"\n🔄 Disponibilidade do livro {id_livro} atualizada para {novo_status}.")
+    print(f"\n Disponibilidade do livro {id_livro} atualizada para {novo_status}.")
 
+def remover_livro(id_livro):
+    cursor.execute("SELECT * FROM livros WHERE id = ?", (id_livro,))
+    if not cursor.fetchone():
+        print(f"\n Nenhum livro encontrado com ID {id_livro}.")
+        return
 
+    cursor.execute("DELETE FROM livros WHERE id = ?", (id_livro,))
+    conexao.commit()
+    print(f"\n Livro com ID {id_livro} removido com sucesso.")
